@@ -85,7 +85,31 @@ def change_data():
 
 
 def delete_data():
-    pass
-
-
-change_data()
+    var = int(input('С каким файлом вы хотите работать? '))
+    while var != 1 and var != 2:
+        print('Такого файла не существует! Выберете один из двух файлов.')
+        var = int(input('С каким файлом вы хотите работать? '))
+    if var == 1:
+        file_name = "data_first_variant.csv"
+        x = 5
+    elif var == 2:
+        file_name = "data_second_variant.csv"
+        x = 2
+    with open(file_name, 'r', encoding='utf-8') as f:
+        var_data = f.readlines()
+    count = 0
+    for i in range(len(var_data)):
+        if var_data[i] == '\n':
+            count += 1
+    num = int(input('Какую запись вы хотите удалить? '))
+    while num > count or num < 1:
+        print('Запись под этим номером не найдена! Выберете существующую запись.')
+        num = int(input('Какую запись вы хотите удалить? '))
+    new_var = []
+    for i in range(len(var_data) - (count + 1 - num) * x):
+        new_var.append(var_data[i])
+    for i in range(len(var_data) - (count - num) * x, len(var_data)):
+        new_var.append(var_data[i])
+    with open(file_name, 'w', encoding='utf-8') as f:
+        for i in range(len(new_var)):
+            f.write(new_var[i])
