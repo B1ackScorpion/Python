@@ -1,5 +1,5 @@
 from data_create import name_data, surname_data, phone_data, address_data
-import data_create
+
 
 
 def input_data():
@@ -41,11 +41,12 @@ def print_data():
 
     print('Вывожу данные из 2 файла: \n')
     with open('data_second_variant.csv', 'r', encoding='utf-8') as f:
-        data_second = f.readlines()
+        data_second = f.readline()
         print(*data_second)
 
 
-def change_data():
+def select_file(command_word):
+    command_word = command_word
     var = int(input('С каким файлом вы хотите работать? '))
     while var != 1 and var != 2:
         print('Такого файла не существует! Выберете один из двух файлов.')
@@ -64,10 +65,16 @@ def change_data():
     for i in range(len(var_data)):
         if var_data[i] == '\n':
             count += 1
-    num = int(input('Какую запись вы хотите изменить? '))
+    num = int(input(f'Какую запись вы хотите {command_word}? '))
     while num > count or num < 1:
         print('Запись под этим номером не найдена! Выберете существующую запись.')
-        num = int(input('Какую запись вы хотите изменить? '))
+        num = int(input(f'Какую запись вы хотите {command_word}? '))
+    return file_name, x, symbol, count, num, var_data
+
+
+def change_data(command_word):
+    command_word = command_word
+    file_name, x, symbol, count, num, var_data = select_file(command_word)
     print('Введите новые данные:')
     name = name_data()
     surname = surname_data()
@@ -84,27 +91,9 @@ def change_data():
             f.write(new_var[i])
 
 
-def delete_data():
-    var = int(input('С каким файлом вы хотите работать? '))
-    while var != 1 and var != 2:
-        print('Такого файла не существует! Выберете один из двух файлов.')
-        var = int(input('С каким файлом вы хотите работать? '))
-    if var == 1:
-        file_name = "data_first_variant.csv"
-        x = 5
-    elif var == 2:
-        file_name = "data_second_variant.csv"
-        x = 2
-    with open(file_name, 'r', encoding='utf-8') as f:
-        var_data = f.readlines()
-    count = 0
-    for i in range(len(var_data)):
-        if var_data[i] == '\n':
-            count += 1
-    num = int(input('Какую запись вы хотите удалить? '))
-    while num > count or num < 1:
-        print('Запись под этим номером не найдена! Выберете существующую запись.')
-        num = int(input('Какую запись вы хотите удалить? '))
+def delete_data(command_word):
+    command_word = command_word
+    file_name, x, symbol, count, num, var_data = select_file(command_word)
     new_var = []
     for i in range(len(var_data) - (count + 1 - num) * x):
         new_var.append(var_data[i])

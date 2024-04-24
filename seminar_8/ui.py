@@ -11,6 +11,6 @@ def interface():
     elif command == 2:
         print_data()
     elif command == 3:
-        change_data()
+        change_data('изменить')
     elif command == 4:
-        delete_data()
+        delete_data('удалить')
