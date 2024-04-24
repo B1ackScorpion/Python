@@ -52,36 +52,36 @@ def change_data():
         var = int(input('С каким файлом вы хотите работать? '))
     if var == 1:
         file_name = "data_first_variant.csv"
+        x = 5
+        symbol = '\n'
     elif var == 2:
         file_name = "data_second_variant.csv"
-    with open(file_name, 'r+', encoding='utf-8') as f:
+        x = 2
+        symbol = ';'
+    with open(file_name, 'r', encoding='utf-8') as f:
         var_data = f.readlines()
-        j = 0
-        count = 0
-        for i in range(len(var_data)):
-            if var_data[i] == '\n':
-                count += 1
-        # print(count)
+    count = 0
+    for i in range(len(var_data)):
+        if var_data[i] == '\n':
+            count += 1
+    num = int(input('Какую запись вы хотите изменить? '))
+    while num > count or num < 1:
+        print('Запись под этим номером не найдена! Выберете существующую запись.')
         num = int(input('Какую запись вы хотите изменить? '))
-        while num > count:
-            print('Запись под этим номером не найдена! Выберете существующую запись.')
-            num = int(input('Какую запись вы хотите изменить? '))
-        print('Введите новые данные:')
-        name = name_data()
-        surname = surname_data()
-        phone = phone_data()
-        address = address_data()
-        new_var = []
-        for i in range(len(var_data) - (count + 1 - num) * 5):
-            new_var.append(var_data[i])
-        new_var.append(''.join(f"{name}\n{surname}\n{phone}\n{address}\n\n"))
-        for i in range(len(var_data) - (count - num) * 5, len(var_data)):
-            new_var.append(var_data[i])
+    print('Введите новые данные:')
+    name = name_data()
+    surname = surname_data()
+    phone = phone_data()
+    address = address_data()
+    new_var = []
+    for i in range(len(var_data) - (count + 1 - num) * x):
+        new_var.append(var_data[i])
+    new_var.append(''.join(f"{name}{symbol}{surname}{symbol}{phone}{symbol}{address}\n\n"))
+    for i in range(len(var_data) - (count - num) * x, len(var_data)):
+        new_var.append(var_data[i])
+    with open(file_name, 'w', encoding='utf-8') as f:
         for i in range(len(new_var)):
             f.write(new_var[i])
-        
-        # print(len(var_data))
-        # print(new_var)
 
 
 def delete_data():
